@@ -27,9 +27,9 @@ resource "aws_security_group" "default" {
   }
 }
 
-resource "aws_key_pair" "default" {
-  key_name = "ec2-elb-key"
-  public_key = "${file("${var.key_path}")}"
+resource "aws_key_pair" "generated_key" {
+  key_name   = "${var.key_name}"
+  public_key = "${tls_private_key.example.public_key_openssh}"
 }
 
 resource "aws_instance" "server1" {
